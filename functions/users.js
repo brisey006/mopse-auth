@@ -92,14 +92,14 @@ const sendEmailVerificationLink = async (user) => {
         const url = `${process.env.FRONT_END_URL}/verify?token=${token}`;
         console.log(url);
         
-        // const msg = {
-        //     to: user.email,
-        //     from: 'digitalhundred263@gmail.com',
-        //     subject: 'Verify your ISESU account.',
-        //     text: 'We are checking if you own this email address.',
-        //     html: `<h3>Click this link to verify your ISESU account<h3><p>${url}`,
-        // };
-        // await sgMail.send(msg);
+        const msg = {
+            to: user.email,
+            from: 'digitalhundred263@gmail.com',
+            subject: 'Verify your ISESU account.',
+            text: 'We are checking if you own this email address.',
+            html: `<h3>Click this link to verify your ISESU account<h3><p>${url}`,
+        };
+        await sgMail.send(msg);
         // res.redirect(`${process.env.FRONT_END_URL}/login?verified=A verification link has been successfully sent to ${user.email}`);
         return true;
     }
