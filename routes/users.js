@@ -50,7 +50,7 @@ router.get('/', async (req, res, next) => {
         const re = new RegExp(query, "gi");
 
         const users = await User.paginate(
-            {},
+            {email: re},
             {
                 limit,
                 page,
@@ -98,7 +98,6 @@ router.get('/verify', async (req, res, next) => {
         const token = req.query.token;
         const userData = jwt.verify(token, process.env.EMAIL_VERIFICATION_KEY);
         const user = await User.findOne({ _id: userData.id });
-
         if (user) {
             if (user.isVerified) {
                 next(systemError('User already verified.', 406));
@@ -111,7 +110,7 @@ router.get('/verify', async (req, res, next) => {
                 }
             }
         } else {
-            next(systemError('User not found', 404));
+            next(systemError('User not found', 406));
         }
     } catch (e) {
         if (e instanceof jwt.TokenExpiredError) {

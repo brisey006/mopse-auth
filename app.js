@@ -18,6 +18,11 @@ mongoose.connect(`mongodb://${process.env.DB_PATH || 'localhost'}:27017/${proces
     useUnifiedTopology: true
 }, () => console.log('MongoDB fired up!'));
 
+app.use((req, res, next) => {
+console.log(req.url);
+next();
+
+});
 app.use('/', require('./routes'));
 
 app.use((req, res, next) => {
@@ -34,3 +39,4 @@ app.use((error, req, res, next) => {
 app.listen(port, () => {
     console.log(`Server started at ${port}`);
 });
+ 
